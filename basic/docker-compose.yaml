@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  bcm2711:
+    image: docker.io/openwrtorg/imagebuilder:bcm27xx-bcm2711-openwrt-21.02
+    volumes:
+      - ./files:/build/files/ 
+      - ./bin:/build/bin/
+    command: /build/files/make_image.sh BIN_DIR=/build/bin
