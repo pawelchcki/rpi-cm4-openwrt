@@ -1,0 +1,10 @@
+#!/bin/sh
+. /lib/functions/uci-defaults.sh
+. /lib/functions.sh
+. /lib/functions/system.sh
+
+ucidef_set_interfaces_lan_wan "eth0" "eth1"
+
+board_config_flush
+
+exit 0
