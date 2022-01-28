@@ -15,9 +15,9 @@ FROM debian as updated_config_build
     ARG CONFIG_USES_SQUASHFS
     RUN update_config.sh CONFIG_USES_SQUASHFS ${CONFIG_USES_SQUASHFS}
     ARG CONFIG_TARGET_ROOTFS_SQUASHFS
-    RUN update_config.sh CONFIG_TARGET_ROOTFS_SQUASHFS n 
+    RUN update_config.sh CONFIG_TARGET_ROOTFS_SQUASHFS ${CONFIG_TARGET_ROOTFS_SQUASHFS}
 
-    RUN mkdir -p packages-mirror; update_config.sh CONFIG_LOCALMIRROR $(pwd)/packages-mirror
+    RUN update_config.sh CONFIG_LOCALMIRROR ${IMAGEBUILDER_WORKDIR}/packages-mirror
     RUN --mount=type=cache,target=packages-mirror,ro find packages-mirror  | tee .cache_debug
 
 FROM scratch as updated_config
@@ -28,7 +28,7 @@ FROM ext_imagebuilder as builder
     RUN echo :set compatible > ~/.vimrc 
     COPY basic/files files
 
-    COPY --from=updated_config / /
+    COPY --from=updated_config / ./
 
 FROM builder as build 
     ARG EXTRA_PACKAGES
