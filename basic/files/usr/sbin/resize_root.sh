@@ -1,8 +1,5 @@
 #!/bin/sh
-. /lib/functions/service.sh
-
-service dockerd stop
-
+/etc/init.d/dockerd stop
 parted /dev/mmcblk0 resizepart 2 100%
 
 # inode needs to be resized for resize2fs to work correctly
